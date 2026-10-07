@@ -143,7 +143,7 @@ Compute scaling on a single agent cannot overcome zero epistemic access to unobs
 ## 3. Protocol Implementation Checklist for Future Agent Evals
 1. **Always run Condition B ($pass@N$) and Condition C (Iso-Budget Single Agent)** alongside any multi-agent benchmark.
 2. **Report True Synergy Delta**:
-   $$\\mathcal{{S}}_{{\\text{{true}}}} = \\text{{Score}}_{{\\text{{coop}}}} - \\max(\\text{{Score}}_{{\\text{{ensemble}}}}, \\text{{Score}}_{{\\text{{single\\_iso}}}}, \\text{{Score}}_{{\\text{{scrambled}}}})$$
+   $$\\mathcal{{S}}_{{\\text{{true}}}} = \\text{{Score}}_{{\\text{{coop}}}} - \\max(\\text{{Score}}_{{\\text{{ensemble}}}}, \\text{{Score}}_{{\\text{{single}}}}, \\text{{Score}}_{{\\text{{scrambled}}}})$$
 3. If $\\mathcal{{S}}_{{\\text{{true}}}} \\le 0.05$, reject claims of "teamwork breakthroughs" — the system is simply performing stochastic sampling or test-time compute expansion.
 """
     rep_path = os.path.join(RESULTS_DIR, "scep_evaluation_report.md")

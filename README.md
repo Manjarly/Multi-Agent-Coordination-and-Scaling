@@ -112,7 +112,7 @@ Published multi-agent evaluations frequently suffer from two critical confounder
 - **Condition D (Scrambled Communication Team)**: $N$ agents communicating with scrambled token noise.
 
 ### True Synergy Formulation:
-$$\mathcal{S}_{\text{true}} = \text{Score}_{\text{coop}} - \max\Big(\text{Score}_{\text{ensemble}}, \; \text{Score}_{\text{single\_iso}}, \; \text{Score}_{\text{scrambled}}\Big)$$
+$$\mathcal{S}_{\text{true}} = \text{Score}_{\text{coop}} - \max\Big(\text{Score}_{\text{ensemble}}, \; \text{Score}_{\text{single}}, \; \text{Score}_{\text{scrambled}}\Big)$$
 
 ### Empirical Results:
 - **Standard Factorable Tasks (HumanEval, Math)**: $\mathcal{S}_{\text{true}} = +0.010$. The apparent gain is **$88.9\%$ explained by ensembling** and **$94.4\%$ explained by token scale**.
