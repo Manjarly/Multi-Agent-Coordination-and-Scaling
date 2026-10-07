@@ -1,0 +1,286 @@
+[
+  {
+    "event_id": "ev_0000",
+    "step": 1,
+    "timestamp": 1791410197.07859,
+    "agent_id": "agent_00",
+    "role": "ARCHITECT",
+    "event_type": "REASONING",
+    "summary": "Decomposing global objective into 4 decoupled submodules with formal contracts",
+    "details": {},
+    "parent_event_ids": [],
+    "latency_sec": 1.4,
+    "tokens": 850,
+    "is_critical_path": false,
+    "is_wasted_work": false
+  },
+  {
+    "event_id": "ev_0001",
+    "step": 4,
+    "timestamp": 1791410197.0786188,
+    "agent_id": "agent_00",
+    "role": "ARCHITECT",
+    "event_type": "MILESTONE",
+    "summary": "Locked Module Contract Specification v1.0",
+    "details": {},
+    "parent_event_ids": [
+      "ev_0000"
+    ],
+    "latency_sec": 0.8,
+    "tokens": 600,
+    "is_critical_path": false,
+    "is_wasted_work": false
+  },
+  {
+    "event_id": "ev_0002",
+    "step": 5,
+    "timestamp": 1791410197.078641,
+    "agent_id": "agent_01",
+    "role": "WORKER",
+    "event_type": "REASONING",
+    "summary": "Implementing subtask components for agent_01",
+    "details": {},
+    "parent_event_ids": [
+      "ev_0001"
+    ],
+    "latency_sec": 0.45,
+    "tokens": 420,
+    "is_critical_path": false,
+    "is_wasted_work": false
+  },
+  {
+    "event_id": "ev_0003",
+    "step": 6,
+    "timestamp": 1791410197.07865,
+    "agent_id": "agent_01",
+    "role": "WORKER",
+    "event_type": "REASONING",
+    "summary": "Implementing subtask components for agent_01",
+    "details": {},
+    "parent_event_ids": [
+      "ev_0001"
+    ],
+    "latency_sec": 0.45,
+    "tokens": 420,
+    "is_critical_path": false,
+    "is_wasted_work": false
+  },
+  {
+    "event_id": "ev_0004",
+    "step": 7,
+    "timestamp": 1791410197.078655,
+    "agent_id": "agent_03",
+    "role": "WORKER",
+    "event_type": "REASONING",
+    "summary": "Implementing subtask components for agent_03",
+    "details": {},
+    "parent_event_ids": [
+      "ev_0001"
+    ],
+    "latency_sec": 0.45,
+    "tokens": 420,
+    "is_critical_path": false,
+    "is_wasted_work": false
+  },
+  {
+    "event_id": "ev_0005",
+    "step": 8,
+    "timestamp": 1791410197.0786612,
+    "agent_id": "agent_02",
+    "role": "WORKER",
+    "event_type": "REASONING",
+    "summary": "Implementing subtask components for agent_02",
+    "details": {},
+    "parent_event_ids": [
+      "ev_0001"
+    ],
+    "latency_sec": 0.45,
+    "tokens": 420,
+    "is_critical_path": false,
+    "is_wasted_work": false
+  },
+  {
+    "event_id": "ev_0006",
+    "step": 9,
+    "timestamp": 1791410197.078668,
+    "agent_id": "agent_02",
+    "role": "WORKER",
+    "event_type": "REASONING",
+    "summary": "Implementing subtask components for agent_02",
+    "details": {},
+    "parent_event_ids": [
+      "ev_0001"
+    ],
+    "latency_sec": 0.45,
+    "tokens": 420,
+    "is_critical_path": false,
+    "is_wasted_work": false
+  },
+  {
+    "event_id": "ev_0007",
+    "step": 10,
+    "timestamp": 1791410197.078673,
+    "agent_id": "agent_02",
+    "role": "WORKER",
+    "event_type": "REASONING",
+    "summary": "Implementing subtask components for agent_02",
+    "details": {},
+    "parent_event_ids": [
+      "ev_0001"
+    ],
+    "latency_sec": 0.45,
+    "tokens": 420,
+    "is_critical_path": false,
+    "is_wasted_work": false
+  },
+  {
+    "event_id": "ev_0008",
+    "step": 11,
+    "timestamp": 1791410197.0786781,
+    "agent_id": "agent_01",
+    "role": "WORKER",
+    "event_type": "REASONING",
+    "summary": "Implementing subtask components for agent_01",
+    "details": {},
+    "parent_event_ids": [
+      "ev_0001"
+    ],
+    "latency_sec": 0.45,
+    "tokens": 420,
+    "is_critical_path": false,
+    "is_wasted_work": false
+  },
+  {
+    "event_id": "ev_0009",
+    "step": 12,
+    "timestamp": 1791410197.078683,
+    "agent_id": "agent_05",
+    "role": "WORKER",
+    "event_type": "REASONING",
+    "summary": "Implementing subtask components for agent_05",
+    "details": {},
+    "parent_event_ids": [
+      "ev_0001"
+    ],
+    "latency_sec": 0.45,
+    "tokens": 420,
+    "is_critical_path": false,
+    "is_wasted_work": false
+  },
+  {
+    "event_id": "ev_0010",
+    "step": 13,
+    "timestamp": 1791410197.078687,
+    "agent_id": "agent_01",
+    "role": "WORKER",
+    "event_type": "REASONING",
+    "summary": "Implementing subtask components for agent_01",
+    "details": {},
+    "parent_event_ids": [
+      "ev_0001"
+    ],
+    "latency_sec": 0.45,
+    "tokens": 420,
+    "is_critical_path": false,
+    "is_wasted_work": false
+  },
+  {
+    "event_id": "ev_0011",
+    "step": 14,
+    "timestamp": 1791410197.0786932,
+    "agent_id": "agent_05",
+    "role": "WORKER",
+    "event_type": "REASONING",
+    "summary": "Implementing subtask components for agent_05",
+    "details": {},
+    "parent_event_ids": [
+      "ev_0001"
+    ],
+    "latency_sec": 0.45,
+    "tokens": 420,
+    "is_critical_path": false,
+    "is_wasted_work": false
+  },
+  {
+    "event_id": "ev_0012",
+    "step": 15,
+    "timestamp": 1791410197.078699,
+    "agent_id": "agent_04",
+    "role": "WORKER",
+    "event_type": "REASONING",
+    "summary": "Implementing subtask components for agent_04",
+    "details": {},
+    "parent_event_ids": [
+      "ev_0001"
+    ],
+    "latency_sec": 0.45,
+    "tokens": 420,
+    "is_critical_path": false,
+    "is_wasted_work": false
+  },
+  {
+    "event_id": "ev_0013",
+    "step": 17,
+    "timestamp": 1791410197.078704,
+    "agent_id": "agent_03",
+    "role": "WORKER",
+    "event_type": "REASONING",
+    "summary": "Proposing shared mutex ring buffer",
+    "details": {},
+    "parent_event_ids": [],
+    "latency_sec": 0.5,
+    "tokens": 350,
+    "is_critical_path": true,
+    "is_wasted_work": true
+  },
+  {
+    "event_id": "ev_0014",
+    "step": 18,
+    "timestamp": 1791410197.078707,
+    "agent_id": "agent_06",
+    "role": "VERIFIER",
+    "event_type": "VERIFICATION",
+    "summary": "REFUTED mutex proposal: 3-agent circular deadlock proof constructed",
+    "details": {},
+    "parent_event_ids": [
+      "ev_0013"
+    ],
+    "latency_sec": 0.9,
+    "tokens": 520,
+    "is_critical_path": true,
+    "is_wasted_work": true
+  },
+  {
+    "event_id": "ev_0015",
+    "step": 31,
+    "timestamp": 1791410197.078763,
+    "agent_id": "agent_02",
+    "role": "WORKER",
+    "event_type": "CONFLICT",
+    "summary": "Concurrent patch collision on telemetry state; auto-replayed via OCC journal",
+    "details": {},
+    "parent_event_ids": [],
+    "latency_sec": 0.4,
+    "tokens": 280,
+    "is_critical_path": false,
+    "is_wasted_work": false
+  },
+  {
+    "event_id": "ev_0016",
+    "step": 42,
+    "timestamp": 1791410197.078767,
+    "agent_id": "agent_07",
+    "role": "VERIFIER",
+    "event_type": "MILESTONE",
+    "summary": "Dual-quorum formal verification passed for all joint system invariants",
+    "details": {},
+    "parent_event_ids": [
+      "ev_0014",
+      "ev_0015"
+    ],
+    "latency_sec": 1.1,
+    "tokens": 950,
+    "is_critical_path": true,
+    "is_wasted_work": false
+  }
+]

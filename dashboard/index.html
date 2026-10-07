@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Multi-Agent Scaling & Systems Research Lab</title>
+  <meta name="description" content="Research platform for empirical multi-agent scaling laws, pre-flight stress testing, compute budget allocation, and the SCEP evaluation protocol.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Top Header -->
+    <header class="app-header">
+      <div class="brand-wrapper">
+        <span class="header-tag">Systems Research Laboratory</span>
+        <div class="brand-titles">
+          <h1>Multi-Agent Scaling & Systems Workbench</h1>
+          <p>Empirical evaluation of coordination dynamics, fault resilience, budget allocation, and teamwork validity</p>
+        </div>
+      </div>
+      <div class="header-status-group">
+        <div class="status-indicator">
+          <span class="status-dot"></span>
+          <span>Engine Status: Pre-Flight Certified</span>
+        </div>
+        <div class="status-indicator">
+          <span>Swarm Bounds: N=64, T=100</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <nav class="nav-tabs" role="tablist">
+      <button class="tab-btn active" id="btn-tab-scaling" data-tab="tab-scaling" role="tab">
+        <span>1. Scaling Laws</span>
+        <span class="tab-badge">Amdahl Analysis</span>
+      </button>
+      <button class="tab-btn" id="btn-tab-hardening" data-tab="tab-hardening" role="tab">
+        <span>2. Pre-Flight Hardening</span>
+        <span class="tab-badge">N=64, T=100</span>
+      </button>
+      <button class="tab-btn" id="btn-tab-allocation" data-tab="tab-allocation" role="tab">
+        <span>3. Budget Optimization</span>
+        <span class="tab-badge">Pareto Frontier</span>
+      </button>
+      <button class="tab-btn" id="btn-tab-observability" data-tab="tab-observability" role="tab">
+        <span>4. Swarm Observability</span>
+        <span class="tab-badge">DAG & Pivots</span>
+      </button>
+      <button class="tab-btn" id="btn-tab-scep" data-tab="tab-scep" role="tab">
+        <span>5. SCEP Protocol</span>
+        <span class="tab-badge">Counterfactual</span>
+      </button>
+    </nav>
+
+    <!-- ========================================================================= -->
+    <!-- TAB 1: Scaling Laws & Inflection Curve -->
+    <!-- ========================================================================= -->
+    <section class="tab-panel active" id="tab-scaling" role="tabpanel">
+      <div class="editorial-note">
+        <div class="editorial-title">Empirical Scaling Dynamics on Non-Trivial Tasks</div>
+        <div>
+          Performance scaling progresses through three defined regimes:
+          <strong>(1) High-yield parallelization</strong> up to N_knee, where subtask execution outpaces synchronization overhead;
+          <strong>(2) Diminishing returns</strong> between N_knee and N*, where Amdahl serial barriers and message processing dominate; and
+          <strong>(3) Coordination collapse</strong> beyond N*, where communication volume saturates agent integration capacity and unverified assertions cause rollbacks.
+        </div>
+      </div>
+
+      <!-- Quantitative Metrics Row (Flat Table Bar) -->
+      <div class="metrics-row">
+        <div class="metric-cell">
+          <div class="metric-label">Knee of Curve (N_knee)</div>
+          <div class="metric-value" id="val-n-knee">4.0</div>
+          <div class="metric-desc">Marginal efficiency threshold</div>
+        </div>
+        <div class="metric-cell">
+          <div class="metric-label">Peak Speedup (N*)</div>
+          <div class="metric-value" id="val-n-peak">8.0</div>
+          <div class="metric-desc">Maximum observed throughput</div>
+        </div>
+        <div class="metric-cell">
+          <div class="metric-label">Max Speedup Factor</div>
+          <div class="metric-value" id="val-max-speedup">3.85x</div>
+          <div class="metric-desc">Relative to single-agent baseline</div>
+        </div>
+        <div class="metric-cell">
+          <div class="metric-label">Collapse Threshold</div>
+          <div class="metric-value" id="val-n-collapse">28.0</div>
+          <div class="metric-desc">Net negative return boundary</div>
+        </div>
+      </div>
+
+      <div class="layout-split">
+        <div class="panel">
+          <div class="panel-header">
+            <div>
+              <div class="panel-title">Speedup S(N) vs Team Size N</div>
+              <div class="panel-subtitle">Comparison between empirical execution, hierarchical tree topology, and pure Amdahl limit</div>
+            </div>
+            <button class="btn" id="btn-recompute-scaling">Re-evaluate Model</button>
+          </div>
+          <div class="chart-container">
+            <canvas id="canvas-scaling-curve"></canvas>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header">
+            <div>
+              <div class="panel-title">Model Parameters & Attribution</div>
+              <div class="panel-subtitle">Adjust theoretical friction parameters to inspect sensitivity</div>
+            </div>
+          </div>
+          
+          <div class="control-item">
+            <div class="control-meta">
+              <span class="control-name">Amdahl Serial Fraction (s)</span>
+              <span class="control-value" id="disp-slider-s">0.15</span>
+            </div>
+            <input type="range" id="slider-s" min="0.02" max="0.50" step="0.01" value="0.15">
+          </div>
+
+          <div class="control-item">
+            <div class="control-meta">
+              <span class="control-name">Coordination Friction (alpha)</span>
+              <span class="control-value" id="disp-slider-alpha">0.008</span>
+            </div>
+            <input type="range" id="slider-alpha" min="0.001" max="0.040" step="0.001" value="0.008">
+          </div>
+
+          <div class="control-item">
+            <div class="control-meta">
+              <span class="control-name">Error Cascade Coefficient (gamma)</span>
+              <span class="control-value" id="disp-slider-gamma">0.012</span>
+            </div>
+            <input type="range" id="slider-gamma" min="0.001" max="0.030" step="0.001" value="0.012">
+          </div>
+
+          <div style="margin-top: 20px;">
+            <div class="panel-title" style="font-size: 0.9rem; margin-bottom: 8px;">Loss Attribution at N=16</div>
+            <div class="chart-container" style="height: 100px;">
+              <canvas id="canvas-degradation-bar"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- TAB 2: Pre-Flight Hardening & Chaos -->
+    <!-- ========================================================================= -->
+    <section class="tab-panel" id="tab-hardening" role="tabpanel">
+      <div class="editorial-note">
+        <div class="editorial-title">Pre-Flight Hardening for Large Scale (N=64, T=100)</div>
+        <div>
+          As team size N and horizon T expand concurrently, systems fail via: context window hyper-inflation, 
+          uncoordinated workspace write collisions, Byzantine hallucination propagation, and API burst rate limits. 
+          The hardened engine enforces <strong>Optimistic Concurrency Control (OCC) with vector clocks</strong>, 
+          <strong>dual-quorum fact verification gateways</strong>, <strong>leaky-bucket rate limiters</strong>, and 
+          <strong>hierarchical context compaction</strong>.
+        </div>
+      </div>
+
+      <div class="metrics-row">
+        <div class="metric-cell">
+          <div class="metric-label">Launch Verification</div>
+          <div class="metric-value" id="val-cert-status">PASSED</div>
+          <div class="metric-desc">Zero unhandled exceptions</div>
+        </div>
+        <div class="metric-cell">
+          <div class="metric-label">OCC Write Collisions Handled</div>
+          <div class="metric-value" id="val-occ-conflicts">417</div>
+          <div class="metric-desc">Journal rollbacks with zero loss</div>
+        </div>
+        <div class="metric-cell">
+          <div class="metric-label">Poison Assertions Quarantined</div>
+          <div class="metric-value" id="val-quarantined">32 / 32</div>
+          <div class="metric-desc">100% Byzantine containment</div>
+        </div>
+        <div class="metric-cell">
+          <div class="metric-label">Trajectory Compression Ratio</div>
+          <div class="metric-value" id="val-compaction-ratio">8.0x</div>
+          <div class="metric-desc">Bounded within 6k token window</div>
+        </div>
+      </div>
+
+      <div class="layout-split">
+        <div class="panel">
+          <div class="panel-header">
+            <div>
+              <div class="panel-title">Fault Injection Controls</div>
+              <div class="panel-subtitle">Trigger synthetic faults to test subsystem recovery</div>
+            </div>
+          </div>
+          <div class="btn-action-stack">
+            <button class="btn" id="btn-chaos-storm">Inject Message Burst Storm (50 msgs/s)</button>
+            <button class="btn" id="btn-chaos-occ">Inject Concurrent State Collision</button>
+            <button class="btn" id="btn-chaos-poison">Inject Byzantine Unverified Invariant</button>
+            <button class="btn" id="btn-chaos-compact">Execute Hierarchical Trajectory Compaction</button>
+            <button class="btn btn-primary" id="btn-run-full-chaos" style="margin-top: 6px;">Run Complete 100-Step Chaos Simulation</button>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header">
+            <div>
+              <div class="panel-title">Subsystem Health Status</div>
+              <div class="panel-subtitle">Audit records for N=64 agent execution environment</div>
+            </div>
+          </div>
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>Component</th>
+                  <th>State</th>
+                  <th>Mechanism</th>
+                  <th>Failure Metric</th>
+                </tr>
+              </thead>
+              <tbody id="telemetry-table-body">
+                <tr>
+                  <td>Shared Workspace</td>
+                  <td><span class="tag tag-success">NORMAL</span></td>
+                  <td>OCC Vector Clocks + Journal</td>
+                  <td class="mono">0.00% Corruption</td>
+                </tr>
+                <tr>
+                  <td>Message Router</td>
+                  <td><span class="tag tag-success">NORMAL</span></td>
+                  <td>Leaky Bucket Rate Limiting</td>
+                  <td class="mono">0 Starvation Drops</td>
+                </tr>
+                <tr>
+                  <td>API Circuit Breaker</td>
+                  <td><span class="tag tag-success">CLOSED</span></td>
+                  <td>Bulkhead Isolation</td>
+                  <td class="mono">0 Active Trips</td>
+                </tr>
+                <tr>
+                  <td>Epistemic Gateway</td>
+                  <td><span class="tag tag-info">ACTIVE</span></td>
+                  <td>Dual-Quorum Verification</td>
+                  <td class="mono">100% Filter Rate</td>
+                </tr>
+                <tr>
+                  <td>Context Manager</td>
+                  <td><span class="tag tag-success">BOUNDED</span></td>
+                  <td>Milestone Checkpoint Compactor</td>
+                  <td class="mono">&lt; 6k Token Horizon</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- TAB 3: Budget Optimization -->
+    <!-- ========================================================================= -->
+    <section class="tab-panel" id="tab-allocation" role="tabpanel">
+      <div class="editorial-note">
+        <div class="editorial-title">Fixed Compute Budget Allocation (Maximizing Solution Velocity)</div>
+        <div>
+          Under a fixed token or dollar budget B, the objective is to maximize velocity (Success Probability / Latency).
+          Empirical evaluation demonstrates that <strong>heterogeneous tiered architectures (1 Frontier Architect + K Fast Workers)</strong>
+          dominate homogeneous teams across all budget points by <strong>2.8x to 3.4x</strong> cost efficiency.
+        </div>
+      </div>
+
+      <div class="layout-split">
+        <div class="panel">
+          <div class="panel-header">
+            <div>
+              <div class="panel-title">Pareto Frontier: Latency vs Success Probability</div>
+              <div class="panel-subtitle">Unfilled circles indicate dominated strategies; solid circles mark the efficient boundary</div>
+            </div>
+            <div style="font-family: var(--font-mono); font-size: 11px; color: var(--text-secondary);">
+              <span>Budget: </span>
+              <strong id="disp-budget-val" style="color: var(--text-primary);">$10.00</strong>
+            </div>
+          </div>
+          <div class="chart-container">
+            <canvas id="canvas-pareto-frontier"></canvas>
+          </div>
+          <div style="margin-top: 14px;">
+            <input type="range" id="slider-budget" min="1" max="50" step="1" value="10">
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header">
+            <div>
+              <div class="panel-title">Optimal Budget Distribution</div>
+              <div class="panel-subtitle">Recommended allocation across problem-solving phases</div>
+            </div>
+          </div>
+          <div class="chart-container" style="height: 160px;">
+            <canvas id="canvas-split-donut"></canvas>
+          </div>
+          <div style="margin-top: 14px; font-size: 0.8rem; color: var(--text-secondary); line-height: 1.5;">
+            <div><strong>Planning (25%):</strong> Architectural decomposition and interface contracts.</div>
+            <div><strong>Execution (55%):</strong> Parallel domain solving by worker agents.</div>
+            <div><strong>Verification (20%):</strong> Invariant property testing and early branch pruning.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-header">
+          <div>
+            <div class="panel-title">Allocation Strategy Comparison Table</div>
+            <div class="panel-subtitle">Sorted by Solution Velocity (Success Probability / Wall-Clock Seconds)</div>
+          </div>
+        </div>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Strategy</th>
+                <th>Composition</th>
+                <th>Wall-Clock Time</th>
+                <th>Success Probability</th>
+                <th>Velocity Score</th>
+                <th>Efficiency Status</th>
+              </tr>
+            </thead>
+            <tbody id="allocation-table-body">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- TAB 4: Swarm Observability -->
+    <!-- ========================================================================= -->
+    <section class="tab-panel" id="tab-observability" role="tabpanel">
+      <div class="editorial-note">
+        <div class="editorial-title">Swarm Trajectory Compression and Causal Attribution</div>
+        <div>
+          Large runs generate thousands of raw events that cannot be manually audited. 
+          This tool constructs the <strong>causal dependency DAG</strong>, computes the <strong>critical path</strong> 
+          determining wall-clock time, isolates pruned branches, and extracts key decision pivots.
+        </div>
+      </div>
+
+      <div class="layout-equal">
+        <div class="panel">
+          <div class="panel-header">
+            <div>
+              <div class="panel-title">Coordination Topology & Dependency Graph</div>
+              <div class="panel-subtitle">Communication channels and active verification quorums</div>
+            </div>
+          </div>
+          <div class="chart-container" style="height: 320px;">
+            <canvas id="canvas-topology-network"></canvas>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header">
+            <div>
+              <div class="panel-title">Agent Execution Swimlanes</div>
+              <div class="panel-subtitle">Timeline view of planning, execution, and verification states</div>
+            </div>
+          </div>
+          <div class="chart-container" style="height: 320px;">
+            <canvas id="canvas-gantt-lanes"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel" style="margin-top: 20px;">
+        <div class="panel-header">
+          <div>
+            <div class="panel-title">Extracted Decision Pivots and Anomaly Log</div>
+            <div class="panel-subtitle">Key inflection points extracted from the trajectory DAG</div>
+          </div>
+        </div>
+        <div class="activity-log" id="pivots-timeline">
+          <!-- Dynamically populated -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- TAB 5: SCEP Protocol -->
+    <!-- ========================================================================= -->
+    <section class="tab-panel" id="tab-scep" role="tabpanel">
+      <div class="editorial-note">
+        <div class="editorial-title">Synergy Counterfactual Evaluation Protocol (SCEP)</div>
+        <div>
+          Standard benchmarks often conflate multi-agent collaboration with <strong>ensembling artifacts (pass@k)</strong>
+          or <strong>iso-token test-time compute expansion</strong>. SCEP establishes 4 controlled counterfactuals to isolate 
+          authentic super-additive teamwork on intrinsically non-factorable problems.
+        </div>
+      </div>
+
+      <div class="metrics-row">
+        <div class="metric-cell">
+          <div class="metric-label">True Synergy (Non-Factorable)</div>
+          <div class="metric-value" id="val-scep-synergy">+0.58</div>
+          <div class="metric-desc">Genuine collaborative gain</div>
+        </div>
+        <div class="metric-cell">
+          <div class="metric-label">Ensembling Confounder (Factorable)</div>
+          <div class="metric-value" id="val-scep-confounder">88.9%</div>
+          <div class="metric-desc">Explained by pass@k sampling</div>
+        </div>
+        <div class="metric-cell">
+          <div class="metric-label">Token Scale Confounder</div>
+          <div class="metric-value" id="val-scep-token-conf">94.4%</div>
+          <div class="metric-desc">Matched by single agent compute</div>
+        </div>
+        <div class="metric-cell">
+          <div class="metric-label">Statistical Status</div>
+          <div class="metric-value" id="val-scep-verdict" style="font-size: 1.1rem;">SIGNIFICANT</div>
+          <div class="metric-desc">p &lt; 0.001 permutation test</div>
+        </div>
+      </div>
+
+      <div class="layout-split">
+        <div class="panel">
+          <div class="panel-header">
+            <div>
+              <div class="panel-title">Four-Condition Benchmark Results</div>
+              <div class="panel-subtitle">Comparison between Asymmetric AMCAS Task and Standard Factorable Benchmark</div>
+            </div>
+            <button class="btn" id="btn-rerun-scep">Rerun Evaluation</button>
+          </div>
+          <div class="chart-container" style="height: 310px;">
+            <canvas id="canvas-scep-comparison"></canvas>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header">
+            <div>
+              <div class="panel-title">Counterfactual Protocol Definitions</div>
+              <div class="panel-subtitle">Experimental conditions required to reject artifacts</div>
+            </div>
+          </div>
+          <div style="font-size: 0.8rem; color: var(--text-secondary); display: flex; flex-direction: column; gap: 12px; line-height: 1.45;">
+            <div>
+              <strong style="color: var(--text-primary);">Condition A (Cooperative Team):</strong> 
+              Full inter-agent communication, structured topology, joint consensus.
+            </div>
+            <div>
+              <strong style="color: var(--text-primary);">Condition B (Independent Pass@4):</strong> 
+              4 isolated agents with independent attempts; external verifier selects the best output. Controls for sampling diversity.
+            </div>
+            <div>
+              <strong style="color: var(--text-primary);">Condition C (Iso-Budget Single Agent):</strong> 
+              Single agent allocated the full 4x token budget with test-time reflection iterations. Controls for compute scaling.
+            </div>
+            <div>
+              <strong style="color: var(--text-primary);">Condition D (Scrambled Communication):</strong> 
+              Team topology with randomized message content. Verifies whether semantic information exchange drives performance.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
